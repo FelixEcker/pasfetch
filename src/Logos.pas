@@ -1,5 +1,6 @@
 unit Logos;
 
+{$SMARTLINK ON}  
 interface
     uses Crt;
 
@@ -8,6 +9,9 @@ interface
 
     // LOGOS ARE FIXE WIDTH OF 
     const
+        { COLORS }
+        ANSI_BLUE = '\033[0;30m';
+        { ART }
         ALPINE = '    /\ /\     ' + LineEnding +
 			     '   /  \  \    ' + LineEnding +
 			     '  /    \  \   ' + LineEnding +

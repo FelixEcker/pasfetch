@@ -23,3 +23,6 @@ The configuration has the following options:
 * fl:UPTIME The systems uptime
 
 *To specify an ENV variable add `env:` followed by the name of the variable. `fl` stands for file. Any point which has the `fl` prefix is fetched from a file or a shell command, this is only important for the program to know how to get the information.*
+
+## TODO
+* Find ways to reduce binary size. I feel like 1 MB is a little to large even with smart linking and such

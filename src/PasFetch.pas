@@ -1,4 +1,5 @@
 {$mode delphi}
+{$longStrings on}
 program PasFetch;
 
 {
@@ -39,6 +40,29 @@ var
 begin
     if (RunCommand('uname', [param], res)) then
         exit(StringReplace(res, sLineBreak, '', [rfReplaceAll]));
+end;
+
+function CPUString: String;
+var
+    s: String;
+    cmp: AnsiString;
+    split: TStringDynArray;
+begin
+    AssignFile(FTmpFile, '/proc/cpuinfo');
+    Reset(FTmpFile);
+    while not eof(FTmpFile) do
+    begin
+        readln(FTmpFile, s);
+        split := SplitString(SplitString(s, ':')[0], ' ');
+        if (split[0]= 'model') then
+        begin
+            s := SplitString(s, ':')[1];
+            exit(Copy(s, 2, Length(s)-1)); // Strip Leading space
+        end;
+    end;
+
+    CloseFile(FTmpFile);
+    exit('Not Found');
 end;
 
 function MemoryUsageString: String;
@@ -153,8 +177,9 @@ begin
         begin
             // Apparently cant do a "case of" with strings in delphi mode, sucks
             if (tmp[1] = 'MEM') then FInfos[i] := MemoryUsageString
+            else if (tmp[1] = 'CPU') then FInfos[i] := CPUString
             else if (tmp[1] = 'OS') then FInfos[i] := FOSName
-            else if (tmp[1] = 'UPTIME') then FInfos[i] := Uptime()
+            else if (tmp[1] = 'UPTIME') then FInfos[i] := Uptime
             else if (tmp[1] = 'KERNEL') then FInfos[i] := UName('-r'); 
         end;
 
