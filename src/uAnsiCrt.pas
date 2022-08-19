@@ -467,6 +467,4 @@ begin
   end;
 end;
 
-initialization
-  {$WARNING This unit would only work on console that supports ANSI code.}
 end.

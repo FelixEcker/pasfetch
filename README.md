@@ -27,6 +27,5 @@ The configuration has the following options:
 ## Third Party Software
 pasfetch utilises the uAnsiCrt unit by [Mr Bee aka @pak_lebah](https://github.com/pakLebah). Find it [here](https://gist.github.com/pakLebah/c5e2bbd0b93c863b2122660111db68d1).
 
-
 ## TODO
 * Find ways to reduce binary size. I feel like 1 MB is a little to large even with smart linking and such

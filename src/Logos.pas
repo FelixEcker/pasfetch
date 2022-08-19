@@ -9,9 +9,6 @@ interface
 
     // LOGOS ARE FIXE WIDTH OF 
     const
-        { COLORS }
-        ANSI_BLUE = '\033[0;30m';
-        { ART }
         ALPINE = '    /\ /\     ' + LineEnding +
 			     '   /  \  \    ' + LineEnding +
 			     '  /    \  \   ' + LineEnding +
@@ -69,10 +66,10 @@ interface
                     {****************}
         ARCH7 =     ' _______        ' + LineEnding +
                     '|____   \ \     ' + LineEnding +
-                    '    / /\\ \\    ' + LineEnding +
-                    '   / /__\\ \\   ' + LineEnding +
-                    '  / /____\\ \\  ' + LineEnding +
-                    ' /_/      \\_\\ ';
+                    '    / /  \      ' + LineEnding +
+                    '   / /__\ \     ' + LineEnding +
+                    '  / /____\ \    ' + LineEnding +
+                    ' /_/      \_\   ';
         ARCH7_COLOR = CYAN;
                     {****************}
         ELEMENTARY =

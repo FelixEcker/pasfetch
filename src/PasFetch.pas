@@ -1,5 +1,4 @@
 {$mode delphi}
-{$longStrings on}
 program PasFetch;
 
 {
@@ -30,6 +29,7 @@ function Uptime: String;
 var
     res: String;
 begin
+    result := 'Not Found';
     if (RunCommand('uptime', ['-p'], res)) then
         exit(StringReplace(SplitString(res, 'up ')[1], sLineBreak, '', [rfReplaceAll]));
 end;
@@ -38,6 +38,7 @@ function UName(const param: String): String;
 var
     res: String;
 begin
+    result := 'Not Found';
     if (RunCommand('uname', [param], res)) then
         exit(StringReplace(res, sLineBreak, '', [rfReplaceAll]));
 end;
@@ -45,7 +46,6 @@ end;
 function CPUString: String;
 var
     s: String;
-    cmp: AnsiString;
     split: TStringDynArray;
 begin
     AssignFile(FTmpFile, '/proc/cpuinfo');
