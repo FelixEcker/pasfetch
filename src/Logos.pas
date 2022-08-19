@@ -2,7 +2,7 @@ unit Logos;
 
 {$SMARTLINK ON}  
 interface
-    uses Crt;
+    uses uAnsiCrt;
 
     function GetLogo(const os: String): String;
     function GetColor(const os: String): Byte;

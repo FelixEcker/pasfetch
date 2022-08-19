@@ -24,5 +24,9 @@ The configuration has the following options:
 
 *To specify an ENV variable add `env:` followed by the name of the variable. `fl` stands for file. Any point which has the `fl` prefix is fetched from a file or a shell command, this is only important for the program to know how to get the information.*
 
+## Third Party Software
+pasfetch utilises the uAnsiCrt unit by [Mr Bee aka @pak_lebah](https://github.com/pakLebah). Find it [here](https://gist.github.com/pakLebah/c5e2bbd0b93c863b2122660111db68d1).
+
+
 ## TODO
 * Find ways to reduce binary size. I feel like 1 MB is a little to large even with smart linking and such

@@ -10,7 +10,7 @@ program PasFetch;
     (i do not claim copyright. all rights go to the original owners)
 }
 
-uses Classes, Crt, Dos, IniFiles, Logos, Math, Process, StrUtils, SysUtils, Types;
+uses Classes, Dos, IniFiles, Logos, Math, Process, StrUtils, SysUtils, Types, uAnsiCrt;
 
 var
     FConfig: TIniFile;
@@ -194,7 +194,7 @@ begin
         begin
             if FPrintColor then TextColor(Logos.GetColor(FOsName));
             write(FLogo[i]);
-            if FPrintColor then NormVideo; // NormVideo resets the Color back to default
+            if FPrintColor then AReset; // NormVideo resets the Color back to default
         end
         else
             write(FSpacing);
@@ -205,7 +205,7 @@ begin
             if FPrintColor then TextColor(Logos.GetColor(FOsName));
             write('     '+PadToLength(
                 SplitString(FWantedInfos[i]+':', ':')[1], FLongest));
-            if FPrintColor then NormVideo;
+            if FPrintColor then AReset;
 
             write(' '+FInfos[i]);
         end;
