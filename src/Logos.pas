@@ -1,6 +1,5 @@
 unit Logos;
 
-{$SMARTLINK ON}  
 interface
     uses uAnsiCrt;
 
@@ -107,6 +106,9 @@ interface
                     '      ---(_)    ';
         UBUNTU_COLOR = RED;
 
+    var
+        FOverrideColor: byte;  // 0 = do not override color.
+
 implementation
 
 function GetLogo(const os: String): String;
@@ -128,6 +130,7 @@ end;
 
 function GetColor(const os: String): Byte;
 begin
+    if (FOverrideColor <> 0) then exit(FOverrideColor);
     case os of
         '"Arch Linux"':       exit(ARCH_COLOR);
         '"Alpine Linux"':     exit(ALPINE_COLOR);

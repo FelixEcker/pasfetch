@@ -15,6 +15,9 @@ var
     FConfig: TIniFile;
     FSpacing: String;
     FPrintColor: boolean;
+    FInfoLabelStyle: byte; // default tsBold
+    FInfoTextStyle: byte;  // default tsResetAll
+    FLogoStyle: byte;      // default tsResetAll
     FUserAtMachine: boolean;
     FOSName: String;
     FWantedInfos: TStringDynArray;
@@ -145,7 +148,6 @@ begin
     FOSName := GetOsName();
     FLogo := SplitString(Logos.GetLogo(FOSName), sLineBreak);
 
-    // All this should be loaded from a config    
     FConfig := TIniFile.Create(GetEnv('HOME')+'/.config/pasfetch/config.ini');
     if not FileExists(GetEnv('HOME')+'/.config/pasfetch/config.ini') then
     begin
@@ -156,9 +158,15 @@ begin
         writeln('Created '+GetEnv('HOME')+'/.config/pasfetch/config.ini');
     end;
 
-    FPrintColor := FConfig.ReadBool('PASFETCH', 'color', True);
     FUserAtMachine := FConfig.ReadBool('PASFETCH', 'useratmachine', True);
     FWantedInfos := SplitString(FConfig.ReadString('PASFETCH', 'INFOS', 'fl:OS fl:KERNEL env:SHELL'), ' ');
+
+    FPrintColor := FConfig.ReadBool('PASFETCH', 'color', True);
+    Logos.FOverrideColor := FConfig.ReadInteger('PASFETCH', 'overridecolor', 0);
+    FInfoLabelStyle := FConfig.ReadInteger('PASFETCH', 'infolabelstyle', tsBold);
+    FInfoTextStyle := FConfig.ReadInteger('PASFETCH', 'infotextstyle', tsResetAll);
+    FLogoStyle := FConfig.ReadInteger('PASFETCH', 'logostyle', tsResetAll);
+
     FConfig.Free;
     //['fl:OS', 'fl:KERNEL', 'env:SHELL', 'env:USER', 'fl:UPTIME', 'fl:MEM'];
     SetLength(FInfos, Length(FWantedInfos));
@@ -192,6 +200,7 @@ begin
         // OS Art
         if (i < Length(FLogo)) then
         begin
+            TextMode(FLogoStyle);
             if FPrintColor then TextColor(Logos.GetColor(FOsName));
             write(FLogo[i]);
             if FPrintColor then AReset; // NormVideo resets the Color back to default
@@ -202,14 +211,17 @@ begin
         // Information
         if (i < Length(FWantedInfos)) then
         begin
+            TextMode(FInfoLabelStyle);
             if FPrintColor then TextColor(Logos.GetColor(FOsName));
             write('     '+PadToLength(
                 SplitString(FWantedInfos[i]+':', ':')[1], FLongest));
             if FPrintColor then AReset;
 
+            TextMode(FInfoTextStyle);
             write(' '+FInfos[i]);
         end;
         
+        TextMode(tsResetAll);
         writeln();
     end;
 
