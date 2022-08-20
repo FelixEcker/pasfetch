@@ -32,46 +32,70 @@ The configuration has the following options:
 *To specify an ENV variable add `env:` followed by the name of the variable. `fl` stands for file. Any point which has the `fl` prefix is fetched from a file or a shell command, this is only important for the program to know how to get the information.*
 
 ### Colors
+#### Foreground Colors
 ```
-fcBlack        = 30;
-  fcRed          = 31;
-  fcGreen        = 32;
-  fcBrown        = 33;
-  fcBlue         = 34;
-  fcMagenta      = 35;
-  fcCyan         = 36;
-  fcLightGray    = 37;
-  fcRichColors   = 38;  // requires additional parameter(s)
-  fcDefault      = 39;
-  fcDarkGray     = 90;
-  fcLightRed     = 91;
-  fcLightGreen   = 92;
-  fcYellow       = 93;
-  fcLightBlue    = 94;
-  fcLightMagenta = 95;
-  fcLightCyan    = 96;
-  fcWhite        = 97;
-  // background colors
-  bcBlack        = 40;
-  bcRed          = 41;
-  bcGreen        = 42;
-  bcBrown        = 43;
-  bcBlue         = 44;
-  bcMagenta      = 45;
-  bcCyan         = 46;
-  bcLightGray    = 47;
-  bcRichColors   = 48;  // requires additional parameter(s)
-  bcDefault      = 49;
-  bcDarkGray     = 100;
-  bcLightRed     = 101;
-  bcLightGreen   = 102;
-  bcYellow       = 103;
-  bcLightBlue    = 104;
-  bcLightMagenta = 105;
-  bcLightCyan    = 106;
-  bcWhite        = 107;
+* Black         = 30
+* Red           = 31
+* Green         = 32
+* Brown         = 33
+* Blue          = 34
+* Magenta       = 35
+* Cyan          = 36
+* Light Gray    = 37
+* Default       = 39
+* Dark Gray     = 90
+* LightRed      = 91
+* Light Green   = 92
+* Yellow        = 93
+* Light Blue    = 94
+* Light Magenta = 95
+* Light Cyan    = 96
+* White         = 97
 ```
 
+#### Background Colors
+```
+Black         = 40
+Red           = 41
+Green         = 42
+Brown         = 43
+Blue          = 44
+Magenta       = 45
+Cyan          = 46
+Light Gray    = 47
+Default       = 49
+Dark Gray     = 100
+Light Red     = 101
+Light Green   = 102
+Yellow        = 103
+Light Blue    = 104
+Light Magenta = 105
+Light Cyan    = 106
+White         = 107
+```
+
+### Styles
+```
+ResetAll     = 0
+Bold         = 1 
+Dim          = 2
+Italic       = 3
+Underline    = 4
+Blink        = 5
+Overline     = 6
+Invert       = 7
+Hidden       = 8
+Strike       = 9
+Default      = 20
+NoBold       = 21
+NoDim        = 22
+NoUnderline  = 24
+NoBlink      = 25
+NoOverline   = 26
+NoInvert     = 27
+NoHidden     = 28
+NoStrike     = 29
+```
 
 ## Third Party Software
 pasfetch utilises the uAnsiCrt unit by [Mr Bee aka @pak_lebah](https://github.com/pakLebah). Find it [here](https://gist.github.com/pakLebah/c5e2bbd0b93c863b2122660111db68d1).
