@@ -37,6 +37,32 @@ begin
         exit(StringReplace(SplitString(res, 'up ')[1], sLineBreak, '', [rfReplaceAll]));
 end;
 
+function PkgCount: String;
+var
+    res: String;
+begin
+    result := 'Not Found';
+
+    // Any pkg count query that requries a pipe isnt added because i cant figure out
+    // how to do pipes in Pascal.
+    if (FOSName = '"Arch Linux"') or (FOSName = '"Arch bang Linux"') 
+    or (FOSName = '"ArcoLinux"') or (FOSName = '"Artix Linux"') or (FOSName = '"Arch7"') then
+    begin
+        if (RunCommand('pacman', ['-Qq'], res)) then
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
+    end
+    else if (FOSName = '"Alpine Linux"') then
+    begin
+        if (RunCommand('grep', ['''P:''', '/lib/apk/db/installed'], res)) then
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
+    end
+    else if (FOSName = '"Gentoo"') then
+    begin
+        if (RunCommand('qlist', ['-IRv'], res)) then
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
+    end;
+end;
+
 function UName(const param: String): String;
 var
     res: String;
@@ -141,10 +167,12 @@ begin
         writeln('- fl:KERNEL Kernel Version');
         writeln('- fl:UPTIME Systems Uptime');
         writeln('- fl:MEM    Memory Usage');
+        writeln('- fl:CPU    CPU Model Name');
+        writeln('- fl:PKGS   Package Count');
         halt;
     end;
 
-    FSpacing := '                   ';
+    FSpacing := '              ';
     FOSName := GetOsName();
     FLogo := SplitString(Logos.GetLogo(FOSName), sLineBreak);
 
@@ -188,6 +216,7 @@ begin
             else if (tmp[1] = 'CPU') then FInfos[i] := CPUString
             else if (tmp[1] = 'OS') then FInfos[i] := FOSName
             else if (tmp[1] = 'UPTIME') then FInfos[i] := Uptime
+            else if (tmp[1] = 'PKGS') then FInfos[i] := PkgCount
             else if (tmp[1] = 'KERNEL') then FInfos[i] := UName('-r'); 
         end;
 
