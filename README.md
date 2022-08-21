@@ -9,7 +9,7 @@ Alternatively you can clone the AUR package and install it manually using makepk
 pasfetch is built using the Free Pascal Compiler of version 3.2.2 or higher. When executed, the `build.sh` compiles all the required sources into a binary.
 
 ## Configuration
-pasfetch stores its configuration ins $HOME/.config/pasfetch/config.ini. If it does not exist, it will be created by pasfetch.
+pasfetch stores its configuration ins $XDG_CONFIG_HOME/pasfetch/config.ini. If it does not exist, it will be created by pasfetch.
 The configuration has the following options:
 * useratmachine = 1 or 0: Formats the `USER` point like `username@machinename`
 * color = 1 or 0: Sets if pasfetch outputs with color
