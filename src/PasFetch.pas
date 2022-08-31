@@ -1,14 +1,6 @@
 {$mode delphi}
 program PasFetch;
 
-{
-    REFERENCES:
-    https://forum.lazarus.freepascal.org/index.php?topic=54110.0
-    https://www.freepascal.org/docs-html/rtl/dos/getenv.html
-
-    (i do not claim copyright. all rights go to the original owners)
-}
-
 uses Classes, Dos, IniFiles, Logos, Math, Process, StrUtils, SysUtils, Types, uAnsiCrt;
 
 var
