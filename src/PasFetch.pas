@@ -17,6 +17,7 @@ var
     FLongest: Integer;
     FTmpFile: TextFile;
     FLogo: TStringDynArray;
+    FFormatString: String;
     tmp: TStringDynArray;
     i: Integer;
 
@@ -133,19 +134,6 @@ begin
     exit(res);
 end;
 
-{ Pads a String to given length using spaces on the right }
-function PadToLength(input: String; const len: Integer): String;
-var
-    padding: String;
-    i: Integer;
-begin
-    padding := '';
-    for i := 0 to len-Length(input)-1 do
-        padding := padding + ' ';
-
-    exit(input+padding);
-end;
-
 begin
     if (ParamStr(1) = '-h') or (ParamStr(1) = '--help') then
     begin
@@ -198,8 +186,8 @@ begin
         tmp := SplitString(FWantedInfos[i], ':');
         if (tmp[0] = 'env') then // Environment Variables
         begin
-            FInfos[i] := GetEnv(tmp[1]);
-            if (tmp[1] = 'USER') and FUserAtMachine then FInfos[i] := FInfos[i] + '@' + UName('-n');
+            if (tmp[1] = 'USER') and FUserAtMachine then FInfos[i] := FInfos[i] + '@' + UName('-n')
+            else FInfos[i] := GetEnv(tmp[1]);
         end
         else if (tmp[0] = 'fl') then // Information to be grabbed from files
         begin
@@ -214,6 +202,8 @@ begin
 
        if (Length(tmp[1]) > FLongest) then FLongest := Length(FWantedInfos[i]);
     end;
+
+    FFormatString := '%'+IntToStr(FLongest)+'s';
 
     // Write Information to console
     for i := 0 to max(Length(FInfos), Length(FLogo))-1 do
@@ -234,8 +224,8 @@ begin
         begin
             TextMode(FInfoLabelStyle);
             if FPrintColor then TextColor(Logos.GetColor(FOsName));
-            write('     '+PadToLength(
-                SplitString(FWantedInfos[i]+':', ':')[1], FLongest));
+            write('     '+Format(FFormatString, 
+                [SplitString(FWantedInfos[i]+':', ':')[1]]));
             if FPrintColor then AReset;
 
             TextMode(FInfoTextStyle);
