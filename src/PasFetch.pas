@@ -186,8 +186,8 @@ begin
         tmp := SplitString(FWantedInfos[i], ':');
         if (tmp[0] = 'env') then // Environment Variables
         begin
-            if (tmp[1] = 'USER') and FUserAtMachine then FInfos[i] := FInfos[i] + '@' + UName('-n')
-            else FInfos[i] := GetEnv(tmp[1]);
+            FInfos[i] := GetEnv(tmp[1]);
+            if (tmp[1] = 'USER') and FUserAtMachine then FInfos[i] := FInfos[i] + '@' + UName('-n');
         end
         else if (tmp[0] = 'fl') then // Information to be grabbed from files
         begin
