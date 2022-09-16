@@ -125,6 +125,8 @@ begin
         '"Gentoo"':           exit(GENTOO);
         '"Linux Mint"':       exit(MINT);
         '"Ubuntu"':           exit(UBUNTU);
+    else
+        exit('No Logo for distro');
     end;
 end;
 
@@ -143,6 +145,8 @@ begin
         '"Gentoo"':           exit(GENTOO_COLOR);
         '"Linux Mint"':       exit(MINT_COLOR);
         '"Ubuntu"':           exit(UBUNTU_COLOR);
+    else
+        exit(ARCH_COLOR);
     end;
 end;
 

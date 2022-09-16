@@ -96,6 +96,9 @@ begin
     AssignFile(FTmpFile, '/proc/meminfo');
     Reset(FTmpFile);
 
+    total := '0';
+    free := 0;
+
     while not eof(FTmpFile) do
     begin
         readln(FTmpFile, s);
