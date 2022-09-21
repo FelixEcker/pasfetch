@@ -122,7 +122,11 @@ var
     s, res: String;
     split: TStringDynArray;
 begin
-    AssignFile(FTmpFile, '/etc/os-release');
+    if FileExists('/etc/os-release') then
+        AssignFile(FTmpFile, '/etc/os-release')
+    else
+        AssignFile(FTmpFile, '/etc/release');
+
     Reset(FTmpFile);
 
     res := '';
