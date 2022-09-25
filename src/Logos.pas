@@ -53,7 +53,7 @@ interface
 			        ' /   ,.''`.  \ ' + LineEnding +
 			        '/.,''`     `''.\ ';
         ARTIX_COLOR = CYAN;
-                    {***************}
+                    {*********}
         DEBIAN =    '  _____  ' + LineEnding +
                     ' /  __ \ ' + LineEnding +
                     '|  /    |' + LineEnding +
@@ -97,6 +97,15 @@ interface
                     '  |  \_____/  | ' + LineEnding +
                     '  \___________/ ';
         MINT_COLOR = GREEN;
+                    {*******************}
+        NETBSD =    '\\`-______,----__  ' + LineEnding +
+                    ' \\        __,---`_' + LineEnding +
+                    '  \\       `.____  ' + LineEnding +
+                    '   \\-______,----`-' + LineEnding +
+                    '    \\             ' + LineEnding +
+                    '     \\            ' + LineEnding +
+                    '      \\           ';
+        NETBSD_COLOR = YELLOW;
                     {****************}
         UBUNTU =    '          _     ' + LineEnding +
                     '      ---(_)    ' + LineEnding +
@@ -124,6 +133,7 @@ begin
         '"elementary OS"':    exit(ELEMENTARY);
         '"Gentoo"':           exit(GENTOO);
         '"Linux Mint"':       exit(MINT);
+        '"NetBSD"':           exit(NETBSD);
         '"Ubuntu"':           exit(UBUNTU);
     else
         exit('No Logo for distro');
@@ -144,6 +154,7 @@ begin
         '"elementary OS"':    exit(ELEMENTARY_COLOR);
         '"Gentoo"':           exit(GENTOO_COLOR);
         '"Linux Mint"':       exit(MINT_COLOR);
+        '"NetBSD"':           exit(NETBSD_COLOR);
         '"Ubuntu"':           exit(UBUNTU_COLOR);
     else
         exit(ARCH_COLOR);
