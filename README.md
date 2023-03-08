@@ -34,23 +34,23 @@ The configuration has the following options:
 ### Colors
 #### Foreground Colors
 ```
-* Black         = 30
-* Red           = 31
-* Green         = 32
-* Brown         = 33
-* Blue          = 34
-* Magenta       = 35
-* Cyan          = 36
-* Light Gray    = 37
-* Default       = 39
-* Dark Gray     = 90
-* LightRed      = 91
-* Light Green   = 92
-* Yellow        = 93
-* Light Blue    = 94
-* Light Magenta = 95
-* Light Cyan    = 96
-* White         = 97
+Black         = 30
+Red           = 31
+Green         = 32
+Brown         = 33
+Blue          = 34
+Magenta       = 35
+Cyan          = 36
+Light Gray    = 37
+Default       = 39
+Dark Gray     = 90
+LightRed      = 91
+Light Green   = 92
+Yellow        = 93
+Light Blue    = 94
+Light Magenta = 95
+Light Cyan    = 96
+White         = 97
 ```
 
 #### Background Colors
