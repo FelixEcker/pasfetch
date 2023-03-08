@@ -1,7 +1,10 @@
 #!/bin/sh
-rm -rf out
-mkdir out
 
-fpc -O4 src/PasFetch.pas -FE"out/"
+mkdir -p out
+rm -rf out/*
 
-mv out/PasFetch PasFetch
+if [[ $1 == debug ]]; then
+  fpc src/pasfetch.pas -FE"out/" -Fu"inc/" -g -dDEBUG
+else
+  fpc src/pasfetch.pas -FE"out/" -Fu"inc/" -O4 -Xs -XX
+fi
