@@ -115,6 +115,14 @@ interface
                     '      ---(_)    ';
         UBUNTU_COLOR = RED;
 
+        MACOS =     #27'[31m       .:''    ' + LineEnding +
+                    #27'[31m    _ :''_     ' + LineEnding +
+                    #27'[32m  .''`_`-''_``. ' + LineEnding +
+                    #27'[32m :________.-'' '+ LineEnding +
+                    #27'[33m :_______:    ' + LineEnding +
+                    #27'[34m  :_______`-; ' + LineEnding +
+                    #27'[35m   `._.-._.''  ';
+
     var
         FOverrideColor: byte;  // 0 = do not override color.
 
@@ -135,6 +143,7 @@ begin
         '"Linux Mint"':       exit(MINT);
         '"NetBSD"':           exit(NETBSD);
         '"Ubuntu"':           exit(UBUNTU);
+        'MacOS':              exit(MACOS);
     else
         exit('No Logo for distro');
     end;

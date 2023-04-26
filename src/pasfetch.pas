@@ -66,10 +66,13 @@ begin
 end;
 
 function CPUString: String;
+{$IF defined(LINUX)}
 var
     s: String;
     split: TStringDynArray;
+{$ENDIF}
 begin
+  {$IF defined(LINUX)}
     AssignFile(FTmpFile, '/proc/cpuinfo');
     Reset(FTmpFile);
     while not eof(FTmpFile) do
@@ -85,14 +88,23 @@ begin
 
     CloseFile(FTmpFile);
     exit('Not Found');
+  {$ELSEIF defined(DARWIN)}
+    if not (RunCommand('sysctl', ['-n', 'machdep.cpu.brand_string'], result)) then
+      exit('Not Found');
+
+    result := StringReplace(result, sLineBreak, '', [rfReplaceAll]);
+  {$ENDIF}
 end;
 
 function MemoryUsageString: String;
+{$IF defined(LINUX)}
 var
     s, total: String;
     free: Integer;
     split: TStringDynArray;
+{$ENDIF}
 begin
+  {$IF defined(LINUX)}
     AssignFile(FTmpFile, '/proc/meminfo');
     Reset(FTmpFile);
 
@@ -115,13 +127,19 @@ begin
 
     CloseFile(FTmpFile);
     exit(IntToStr(StrToInt(total)-free)+' / '+total+' kB');
+  {$ELSEIF defined(DARWIN)}
+    exit('coming soon to macos');
+  {$ENDIF}
 end;
 
 function GetOsName: String;
+{$IF defined(LINUX)}
 var
     s, res: String;
     split: TStringDynArray;
+{$ENDIF}
 begin
+  {$IF defined(LINUX)}
     if FileExists('/etc/os-release') then
         AssignFile(FTmpFile, '/etc/os-release')
     else
@@ -139,6 +157,9 @@ begin
 
     CloseFile(FTmpFile);
     exit(res);
+  {$ELSEIF defined(DARWIN)}
+    exit('MacOS');
+  {$ENDIF}
 end;
 
 begin
