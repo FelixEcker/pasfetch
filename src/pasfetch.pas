@@ -184,8 +184,8 @@ begin
     FOSName := GetOsName();
     FLogo := SplitString(Logos.GetLogo(FOSName), sLineBreak);
 
-    FConfig := TIniFile.Create(GetEnv('HOME')+'/.config/pasfetch/config.ini');
-    if not FileExists(GetEnv('HOME')+'/.config/pasfetch/config.ini') then
+    FConfig := TIniFile.Create(GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini');
+    if not FileExists(GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini') or FileExists(GetEnv('HOME')+'/.config/pasfetch/config.ini') then
     begin
         writeln('No config File present, creating...');
         FConfig.WriteBool('PASFETCH', 'color', True);
