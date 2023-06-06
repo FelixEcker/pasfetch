@@ -168,7 +168,7 @@ begin
         writeln('pasfetch - System Information Fetcher written in Pascal.');
         writeln();
         writeln('Usage: pasfetch');
-        writeln('Config: $XDG_CONFIG_HOME/pasfetch/config.ini (created on first run)');
+        writeln('Config: ${XDG_CONFIG_HOME:-$HOME/.config}/pasfetch/config.ini (created on first run)');
         writeln('Supported Infos:');
         writeln('- All Environment Variables');
         writeln('- fl:OS     Operating System');
