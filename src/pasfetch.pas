@@ -20,6 +20,7 @@ var
     FFormatString: String;
     tmp: TStringDynArray;
     i: Integer;
+    ConfigPath: String;
 
 function Uptime: String;
 var
@@ -168,7 +169,7 @@ begin
         writeln('pasfetch - System Information Fetcher written in Pascal.');
         writeln();
         writeln('Usage: pasfetch');
-        writeln('Config: $XDG_CONFIG_HOME/pasfetch/config.ini (created on first run)');
+        writeln('Config: ${XDG_CONFIG_HOME:-$HOME/.config}/pasfetch/config.ini (created on first run)');
         writeln('Supported Infos:');
         writeln('- All Environment Variables');
         writeln('- fl:OS     Operating System');
@@ -184,14 +185,24 @@ begin
     FOSName := GetOsName();
     FLogo := SplitString(Logos.GetLogo(FOSName), sLineBreak);
 
-    FConfig := TIniFile.Create(GetEnv('HOME')+'/.config/pasfetch/config.ini');
-    if not FileExists(GetEnv('HOME')+'/.config/pasfetch/config.ini') then
+    if GetEnv('XDG_CONFIG_HOME') <> '' then
+    begin
+        ConfigPath := GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini'
+    end
+    else 
+    begin
+        ConfigPath := GetEnv('HOME')+'/.config/pasfetch/config.ini'
+    end;
+    
+    FConfig := TIniFile.Create(ConfigPath);
+
+    if not FileExists(ConfigPath+'/pasfetch/config.ini') then
     begin
         writeln('No config File present, creating...');
         FConfig.WriteBool('PASFETCH', 'color', True);
         FConfig.WriteBool('PASFETCH', 'useratmachine', True);
         FConfig.WriteString('PASFETCH', 'INFOS', 'fl:OS fl:KERNEL env:SHELL');
-        writeln('Created '+GetEnv('HOME')+'/.config/pasfetch/config.ini');
+        writeln('Created '+ConfigPath);
     end;
 
     FUserAtMachine := FConfig.ReadBool('PASFETCH', 'useratmachine', True);
