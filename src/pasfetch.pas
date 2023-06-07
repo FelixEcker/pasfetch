@@ -1,5 +1,17 @@
-{$mode delphi}
-program PasFetch;
+{$ifndef dcc}
+  {$mode delphi}
+{$endif}
+program pasfetch;
+
+{ pasfetch.pas ; System Fetcher written in Freepascal/Delphi }
+{ Author: Marie Eckert                                       }
+{ Contributors: array-in-a-matrix, polluks                   }
+{ Licensed under the ISC license                             }
+{************************************************************}
+{ NOTE: This program is my first real "project" in pascal    }
+{ thus most of the original code is a bit fugly. I plan to   }
+{ rewrite this at sometime in the future. If anyone else has }
+{ the motivation to do so, feel free to do it :)             }
 
 uses Classes, Dos, IniFiles, Logos, Math, Process, StrUtils, SysUtils, Types, uAnsiCrt;
 
@@ -20,7 +32,7 @@ var
     FFormatString: String;
     tmp: TStringDynArray;
     i: Integer;
-    ConfigPath: String;
+    FConfigPath: String;
 
 function Uptime: String;
 var
@@ -41,20 +53,14 @@ begin
     // how to do pipes in Pascal.
     if (FOSName = '"Arch Linux"') or (FOSName = '"Arch bang Linux"') 
     or (FOSName = '"ArcoLinux"') or (FOSName = '"Artix Linux"') or (FOSName = '"Arch7"') then
-    begin
         if (RunCommand('pacman', ['-Qq'], res)) then
-            exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
-    end
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1))
     else if (FOSName = '"Alpine Linux"') then
-    begin
         if (RunCommand('grep', ['''P:''', '/lib/apk/db/installed'], res)) then
-            exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
-    end
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1))
     else if (FOSName = '"Gentoo"') then
-    begin
         if (RunCommand('qlist', ['-IRv'], res)) then
             exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
-    end;
 end;
 
 function UName(const param: String): String;
@@ -117,13 +123,9 @@ begin
         readln(FTmpFile, s);
         split := SplitString(s, ':');
         if (split[0] = 'MemTotal') then
-        begin
-            total := SplitString(StringReplace(split[1], ' ', '', [rfReplaceAll]), 'k')[0];
-        end
+            total := SplitString(StringReplace(split[1], ' ', '', [rfReplaceAll]), 'k')[0]
         else if (split[0] = 'MemFree') then 
-        begin
             free := StrToInt(SplitString(StringReplace(split[1], ' ', '', [rfReplaceAll]), 'k')[0]);
-        end;
     end;
 
     CloseFile(FTmpFile);
@@ -186,23 +188,19 @@ begin
     FLogo := SplitString(Logos.GetLogo(FOSName), sLineBreak);
 
     if GetEnv('XDG_CONFIG_HOME') <> '' then
-    begin
-        ConfigPath := GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini'
-    end
+        FConfigPath := GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini'
     else 
-    begin
-        ConfigPath := GetEnv('HOME')+'/.config/pasfetch/config.ini'
-    end;
+        FConfigPath := GetEnv('HOME')+'/.config/pasfetch/config.ini';
     
-    FConfig := TIniFile.Create(ConfigPath);
+    FConfig := TIniFile.Create(FConfigPath);
 
-    if not FileExists(ConfigPath+'/pasfetch/config.ini') then
+    if not FileExists(FConfigPath) then
     begin
         writeln('No config File present, creating...');
         FConfig.WriteBool('PASFETCH', 'color', True);
         FConfig.WriteBool('PASFETCH', 'useratmachine', True);
         FConfig.WriteString('PASFETCH', 'INFOS', 'fl:OS fl:KERNEL env:SHELL');
-        writeln('Created '+ConfigPath);
+        writeln('Created '+FConfigPath);
     end;
 
     FUserAtMachine := FConfig.ReadBool('PASFETCH', 'useratmachine', True);
