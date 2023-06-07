@@ -20,7 +20,7 @@ var
     FFormatString: String;
     tmp: TStringDynArray;
     i: Integer;
-    UseXDGVar: Boolean;
+    ConfigPath: String;
 
 function Uptime: String;
 var
@@ -187,29 +187,22 @@ begin
 
     if GetEnv('XDG_CONFIG_HOME') <> '' then
     begin
-    	FConfig := TIniFile.Create(GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini');
-	    UseXDGVar := true;
+        ConfigPath := GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini'
     end
     else 
     begin
-    	FConfig := TIniFile.Create(GetEnv('HOME')+'/.config/pasfetch/config.ini');
-	    UseXDGVar := false;
+        ConfigPath := GetEnv('HOME')+'/.config/pasfetch/config.ini'
     end;
+    
+    FConfig := TIniFile.Create(ConfigPath);
 
-    if not FileExists(GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini') or FileExists(GetEnv('HOME')+'/.config/pasfetch/config.ini') then
+    if not FileExists(ConfigPath+'/pasfetch/config.ini') then
     begin
         writeln('No config File present, creating...');
         FConfig.WriteBool('PASFETCH', 'color', True);
         FConfig.WriteBool('PASFETCH', 'useratmachine', True);
         FConfig.WriteString('PASFETCH', 'INFOS', 'fl:OS fl:KERNEL env:SHELL');
-        if UseXDGVar then 
-        begin
-            writeln('Created '+GetEnv('XDG_CONFIG_HOME')+'/.config/pasfetch/config.ini');
-        end
-        else
-        begin
-            writeln('Created '+GetEnv('HOME')+'/.config/pasfetch/config.ini');
-        end
+        writeln('Created '+ConfigPath);
     end;
 
     FUserAtMachine := FConfig.ReadBool('PASFETCH', 'useratmachine', True);
