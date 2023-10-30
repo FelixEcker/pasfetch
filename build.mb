@@ -1,0 +1,23 @@
+sector .config
+  fields mariebuild:
+    str binname 'pasfetch'
+
+    str outdir 'out'
+    str incdirs 'inc'
+
+    list files 'src/$(binname).pas'
+
+    str debug_flags '-g -dDEBUG'
+    str release_flags '-O4 -Xs -XX'
+
+    str comp_cmd 'fpc $(file) -FE"$(outdir)" -Fu"$(incdirs)" $(mode_flags)'
+    str finalize_cmd 'mv $(outdir)/$(binname) .'
+
+sector .scripts
+  lines prepare:
+#!/usr/bin/bash
+if [[ -d out/ ]]; then
+  rm -rf out/
+fi
+
+mkdir out
