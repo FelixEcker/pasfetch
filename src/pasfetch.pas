@@ -165,6 +165,28 @@ begin
   {$ENDIF}
 end;
 
+function GetHost: String;
+{$IF defined(LINUX)}
+const
+    PATH = '/sys/devices/virtual/dmi/id/product_name';
+var
+    s: String;
+{$ENDIF}
+begin
+{$IF defined(LINUX)}
+    if not FileExists(PATH) then
+      exit('unknown');
+
+    AssignFile(FTmpFile, PATH);
+    Reset(FTMPFile);
+    readln(FTmpFile, s);
+    CloseFile(FTmpFile);
+    exit(s);
+{$ELSE}
+    exit('unknown');
+{$ENDIF}
+end;
+
 begin
     if (ParamStr(1) = '-h') or (ParamStr(1) = '--help') then
     begin
@@ -234,7 +256,8 @@ begin
             else if (tmp[1] = 'OS') then FInfos[i] := FOSName
             else if (tmp[1] = 'UPTIME') then FInfos[i] := Uptime
             else if (tmp[1] = 'PKGS') then FInfos[i] := PkgCount
-            else if (tmp[1] = 'KERNEL') then FInfos[i] := UName('-r'); 
+            else if (tmp[1] = 'KERNEL') then FInfos[i] := UName('-r')
+            else if (tmp[1] = 'HOST') then FInfos[i] := GetHost;
         end;
 
        if (Length(tmp[1]) > FLongest) then FLongest := Length(FWantedInfos[i]);
