@@ -216,9 +216,11 @@ begin
         halt;
     end;
 
-    FSpacing := '              ';
     FOSName := GetOsName();
     FLogo := SplitString(Logos.GetLogo(FOSName), sLineBreak);
+    SetLength(FSpacing, Length(FLogo[0]));
+    for i := 1 to Length(FSpacing) do
+      FSpacing[i] := ' ';
 
     if GetEnv('XDG_CONFIG_HOME') <> '' then
         FConfigPath := GetEnv('XDG_CONFIG_HOME')+'/pasfetch/config.ini'
