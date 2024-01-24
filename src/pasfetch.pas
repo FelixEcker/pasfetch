@@ -47,20 +47,31 @@ function PkgCount: String;
 var
     res: String;
 begin
-    result := 'Not Found';
-
     // Any pkg count query that requries a pipe isnt added because i cant figure out
     // how to do pipes in Pascal.
     if (FOSName = '"Arch Linux"') or (FOSName = '"Arch bang Linux"') 
     or (FOSName = '"ArcoLinux"') or (FOSName = '"Artix Linux"') or (FOSName = '"Arch7"') then
+    begin
         if (RunCommand('pacman', ['-Qq'], res)) then
             exit(IntToStr(Length(SplitString(res, sLineBreak))-1))
+    end
     else if (FOSName = '"Alpine Linux"') then
+    begin
         if (RunCommand('grep', ['''P:''', '/lib/apk/db/installed'], res)) then
             exit(IntToStr(Length(SplitString(res, sLineBreak))-1))
+    end
     else if (FOSName = '"Gentoo"') then
+    begin
         if (RunCommand('qlist', ['-IRv'], res)) then
-            exit(IntToStr(Length(SplitString(res, sLineBreak))-1));
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1))
+    end
+    else if (FOSName = '"Ubuntu"') then
+    begin
+        if (RunCommand('dpkg', ['--list', '--no-pager'], res)) then
+            exit(IntToStr(Length(SplitString(res, sLineBreak))-1))
+    end;
+
+    exit('Not Found');
 end;
 
 function UName(const param: String): String;
