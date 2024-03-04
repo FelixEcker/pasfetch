@@ -1,23 +1,39 @@
-sector .config
-  fields mariebuild:
-    str binname 'pasfetch'
-
-    str outdir 'out'
-    str incdirs 'inc'
-
-    list files 'src/$(binname).pas'
-
-    str debug_flags '-g -dDEBUG'
-    str release_flags '-O4 -Xs -XX'
-
-    str comp_cmd 'fpc $(file) -FE"$(outdir)" -Fu"$(incdirs)" $(mode_flags)'
-    str finalize_cmd 'mv $(outdir)/$(binname) .'
-
-sector .scripts
-  lines prepare:
-#!/usr/bin/bash
-if [[ -d out/ ]]; then
-  rm -rf out/
+sector config
+  section scripts
+    str directories '
+if [[ ! -d obj/ ]]; then
+  mkdir obj
 fi
+'
+    str compile_command 'fpc $(/config/mariebuild/source) -FE"obj/" -Fu"inc/" '
+  end
 
-mkdir out
+  section mariebuild
+    str build_type 'full'
+
+    str source 'src/pasfetch.pas'
+    
+    list str targets 'debug', 'release'
+    str default 'debug'
+  end
+end
+
+sector targets
+  section debug
+    str exec '
+#!/bin/bash
+$(/config/scripts/directories)
+$(/config/scripts/compile_command) -g -dDEBUG
+mv obj/pasfetch .
+    '
+  end
+
+  section release
+    str exec '
+#!/bin/bash
+$(/config/scripts/directories)
+$(/config/scripts/compile_command) -O4 -XX -Xs
+mv obj/pasfetch .
+'
+  end
+end
