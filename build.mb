@@ -20,8 +20,7 @@ end
 
 sector targets
   section debug
-    str exec '
-#!/bin/bash
+    str exec '#!/bin/bash
 $(/config/scripts/directories)
 $(/config/scripts/compile_command) -g -dDEBUG
 mv obj/pasfetch .
@@ -29,8 +28,7 @@ mv obj/pasfetch .
   end
 
   section release
-    str exec '
-#!/bin/bash
+    str exec '#!/bin/bash
 $(/config/scripts/directories)
 $(/config/scripts/compile_command) -O4 -XX -Xs
 mv obj/pasfetch .
