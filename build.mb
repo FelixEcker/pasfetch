@@ -1,6 +1,6 @@
 sector config
   section scripts
-    str directories '
+    str directories '#!/bin/bash
 if [[ ! -d obj/ ]]; then
   mkdir obj
 fi
